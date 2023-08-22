@@ -1,6 +1,6 @@
 # Resend-attachments ☕️
 
-# Companion Tutorial ✨
+# Tutorial ✨
 ### Prerequisites
 
 To get the most out of this guide, you’ll need to:
