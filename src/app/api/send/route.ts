@@ -9,7 +9,7 @@ export async function POST() {
   const pdfFilePath = path.join(__dirname, '../../../../../public',"static","petFile.pdf");
   const pdfFileBuffer =  fs.readFileSync(pdfFilePath)
 
-  const csvFilePath = path.join(__dirname, '../../../../../public',"static","invoicesList.csv");
+  const csvFilePath = path.join(__dirname, '../../../../../public',"static","dogsList.csv");
   const csvFIleBuffer =  fs.readFileSync(csvFilePath)
 
   try {
@@ -27,7 +27,7 @@ export async function POST() {
         {
           content: csvFIleBuffer,
           path: csvFilePath,
-          filename: 'toDo.csv',
+          filename: 'dogsList.csv',
         }
       ],
       text: 'Sending Your csv and Pdf files'
