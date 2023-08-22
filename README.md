@@ -41,6 +41,7 @@ Create an API file under `pages/api/send.ts` if you’re using the [Pages Router
 
 Import the React email template and send an email using the `react` parameter.
 
+`app/api/send/route.ts` 
 ```jsx
 import { EmailTemplate } from '../../../components/EmailTemplate';
 import { NextResponse } from 'next/server';
@@ -64,6 +65,7 @@ export async function POST() {
 }
 ```
 
+`pages/api/send.ts`
 ```jsx
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { EmailTemplate } from '../../components/EmailTemplate';
