@@ -17,7 +17,7 @@ You can create an email through Resend using several programming languages, incl
 
 
 You can also set a '<strong>reply_to address</strong>' if you want to direct any responses to a different location.
-Remember to replace '<strong>'your_resend_api_key</strong>' with your actual Resend API key.
+Remember to use your actual Resend API key.
 You can check more examples here: https://resend.com/docs/introduction#quickstart
 
 
