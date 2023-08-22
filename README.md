@@ -8,17 +8,16 @@ When the status of your domain is "Pending" it means that Resend is still trying
 
 ### How do i create an email?
 You can create an email through Resend using several programming languages, including Node.js, Python, Ruby, Go, Elixir, PHP, and more. Here's how you can generally do it:
-- Initialize the Resend client with your RESEND_API_KEY.
+- Initialize the Resend client with your <strong>RESEND_API_KEY</strong>.
 - Use the send function of the emails service with the appropriate parameters: from, to, subject & html.
 
  Here's an example using Node.js:
 
+![Screenshot from 2023-08-22 10-27-01](https://github.com/HaisonOhara/Resend-attachments/assets/39864254/4b304d75-5bdf-4cac-9700-066df5f4ad9a)
 
 
-
-Just adjust the 'your_resend_api_key', 'Your Name <your@email.com>', 'receiver@email.com', 'Subject of the email', and '<strong>Your HTML content here!</strong>' as per your requirement.
-You can also set a reply_to address if you want to direct any responses to a different location.
-Remember to replace 'your_resend_api_key' with your actual Resend API key.
+You can also set a '<strong>reply_to address</strong>' if you want to direct any responses to a different location.
+Remember to replace '<strong>'your_resend_api_key</strong>' with your actual Resend API key.
 You can check more examples here: https://resend.com/docs/introduction#quickstart
 
 
