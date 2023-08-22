@@ -159,7 +159,7 @@ You can create an email through Resend using several programming languages, incl
 ![Screenshot from 2023-08-22 10-27-01](https://github.com/HaisonOhara/Resend-attachments/assets/39864254/4b304d75-5bdf-4cac-9700-066df5f4ad9a)
 
 
-You can also set a '<strong>reply_to address</strong>' if you want to direct any responses to a different location.
+You can also set a '<strong>reply_to address</strong>' prop if you want to direct any responses to a different location.
 Remember to use your actual Resend API key.
 You can check more examples here: https://resend.com/docs/introduction#quickstart
 
