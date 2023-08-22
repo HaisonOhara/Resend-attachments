@@ -16,8 +16,8 @@ export async function POST() {
     const data = await resend.emails.send({
       from: 'Acme <onboarding@resend.dev>',
       to: ['haison.ohara@outlook.com'],
-      subject: 'Your Invoices',
-      react: EmailTemplate({ firstName: 'Jhon Doe' }),
+      subject: 'Developer Success Engineer - Take-Home Challenge',
+      react: EmailTemplate({ repoLink: 'https://github.com/HaisonOhara/Resend-attachments' }),
       attachments: [
         {
           content: pdfFileBuffer,
@@ -30,7 +30,7 @@ export async function POST() {
           filename: 'dogsList.csv',
         }
       ],
-      text: 'Sending Your csv and Pdf files'
+      text: 'Sending Email with attachments using Resend'
       
     });
 
