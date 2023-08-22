@@ -1,12 +1,13 @@
 # Resend-attachments ☕️
 
 # Companion Tutorial ✨
-## Prerequisites
+### Prerequisites
 
 To get the most out of this guide, you’ll need to:
 
 - [Create an API key](https://resend.com/api-keys)
 - [Verify your domain](https://resend.com/domains)
+- [NextJs basic app](https://nextjs.org/docs/getting-started/installation)
 
 ### 1. Install
 
@@ -18,7 +19,21 @@ Get the Resend Node.js SDK.
 
 Start by creating your email template on `components/email-template.tsx`.
 
-![Screenshot from 2023-08-22 10-49-55.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/62cfa900-8a6c-4ed9-840f-6ad53e3a9291/Screenshot_from_2023-08-22_10-49-55.png)
+```jsx
+import * as React from 'react';
+
+interface EmailTemplateProps {
+  firstName: string;
+}
+
+export const EmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
+  firstName,
+}) => (
+  <div>
+    <h1>Welcome, {firstName}!</h1>
+  </div>
+);
+```
 
 ### 3. Send email using React
 
@@ -26,21 +41,105 @@ Create an API file under `pages/api/send.ts` if you’re using the [Pages Router
 
 Import the React email template and send an email using the `react` parameter.
 
-![Screenshot from 2023-08-22 10-52-48.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e7d92e35-5cfd-4fda-a6b9-96bb47181c91/Screenshot_from_2023-08-22_10-52-48.png)
+```jsx
+import { EmailTemplate } from '../../../components/EmailTemplate';
+import { NextResponse } from 'next/server';
+import { Resend } from 'resend';
 
-![Screenshot from 2023-08-22 10-52-48.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c65ce06b-a14d-4e00-9273-28144fea3758/Screenshot_from_2023-08-22_10-52-48.png)
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+export async function POST() {
+  try {
+    const data = await resend.emails.send({
+      from: 'Acme <onboarding@resend.dev>',
+      to: ['delivered@resend.dev'],
+      subject: 'Hello world',
+      react: EmailTemplate({ firstName: 'John' }),
+    });
+
+    return NextResponse.json(data);
+  } catch (error) {
+    return NextResponse.json({ error });
+  }
+}
+```
+
+```jsx
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { EmailTemplate } from '../../components/EmailTemplate';
+import { Resend } from 'resend';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+  try {
+    const data = await resend.emails.send({
+      from: 'Acme <onboarding@resend.dev>',
+      to: ['delivered@resend.dev'],
+      subject: 'Hello world',
+      react: EmailTemplate({ firstName: 'John' }),
+    });
+
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+```
 
 ### 4. Send email with attachments
 
 If you want to send email with attachments all you need to do is use attachments property.
 
-![Screenshot from 2023-08-22 10-56-04.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/31fef01e-8528-4d96-947f-e87a2d0c69c7/Screenshot_from_2023-08-22_10-56-04.png)
+```jsx
+import { EmailTemplate } from '../../components/email-template';
+import { NextResponse } from 'next/server';
+import { Resend } from 'resend';
+import fs from 'fs'
+import path from 'path';
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-As you can see inside attachments the 'filename' key holds the name of the file you want to attach, while the 'content' key should hold the contents of that file and path contains the path leading to the file’s directory. it is advisable to use **fs** to read file path to avoid some problems with path references.
+export async function POST() {
+  const pdfFilePath = path.join(__dirname, '../../../../../public',"static","petFile.pdf");
+  const pdfFileBuffer =  fs.readFileSync(pdfFilePath)
+
+  const csvFilePath = path.join(__dirname, '../../../../../public',"static","dogsList.csv");
+  const csvFIleBuffer =  fs.readFileSync(csvFilePath)
+
+  try {
+    const data = await resend.emails.send({
+      from: 'Name <onboarding@resend.dev>',
+      to: ['some.email@outlook.com'],
+      subject: 'some subject',
+      react: EmailTemplate({ repoLink: 'https://github.com/HaisonOhara/Resend-attachments' }),
+      attachments: [
+        {
+          content: pdfFileBuffer,
+          path: pdfFilePath,
+          filename: 'petFile.pdf',
+        },
+        {
+          content: csvFIleBuffer,
+          path: csvFilePath,
+          filename: 'dogsList.csv',
+        }
+      ],
+      text: 'Sending Email with attachments using Resend'
+      
+    });
+
+    return NextResponse.json(data);
+  } catch (error) {
+    return NextResponse.json({ error });
+  }
+}
+```
+
+As you can see inside attachments the **filename** key holds the name of the file you want to attach, while the **content** key should hold the contents of that file and path contains the **path** leading to the file’s directory. it is advisable to use **fs** to read file path to avoid some problems with path references.
 
 Do note that there's a maximum size limit for the attachments, with a maximum of 40 megabytes allowed per email.
 
-For testing your code you can make a POST to the endpoint created with NextJs. You can put your personal email in to property so you would be able to se the email. Or you can use Resend tests emails, you can check its details here:https://resend.com/docs/dashboard/emails/send-test-emails#test-delivered-emails
+For testing your code you can make a POST request to the endpoint created with NextJs. You can put your personal email as **to** property so you will be able to see the email. Or you can use Resend tests emails, you can check its details here:https://resend.com/docs/dashboard/emails/send-test-emails#test-delivered-emails
 
 For practical examples of emails with attachments, you can consult : https://resend.com/docs/examples.
 
