@@ -23,7 +23,7 @@ You can check more examples here: https://resend.com/docs/introduction#quickstar
 
 ### I  need to be able to receive emails from Resend. How do I do that?
 Currently, the feature to receive emails directly within Resend is not available . However, there are some useful workarounds that allow you to manage replies and responses. You can set a reply_to address while sending an email that should receive any responses. This could be an existing inbox or even a Slack channel.
-For example, if you want the responses to be directed to your personal email address, you can set that email as your reply_to address. Consequently, if a recipient replies to your email, it will be sent to the designated reply_to address .
-Additionally, if you would like to receive responses in a Slack channel, you can set the reply_to as the email address of that Slack channel. 
+For example, if you want the responses to be directed to your personal email address, you can set that email as your <strong>reply_to address</strong>. Consequently, if a recipient replies to your email, it will be sent to the designated <strong>reply_to address</strong> .
+Additionally, if you would like to receive responses in a Slack channel, you can set the <strong>reply_to as</strong> the email address of that Slack channel. 
 
 You can check here fore more details: https://resend.com/docs/api-reference/emails/send-email
